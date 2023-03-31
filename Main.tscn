@@ -132,5 +132,6 @@ transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 100, 0, 100)
 mesh = SubResource("PlaneMesh_4xdjm")
 
 [node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.964787, 0.263031, 0, -0.263031, 0.964787, 0, 38.4159, 0)
 fov = 90.0
 script = ExtResource("10_xiq6g")
