@@ -2,13 +2,15 @@
 
 ## Description
 
-This project is a script repository to test our texture synthesis scripts and image processing classes using [our fork of Godot 4.0](https://github.com/DrLutzi/godot), in the [texsyn4 branch](https://github.com/DrLutzi/godot/tree/texsyn4)
-It is used by researchers at the BISOUS of the University of Sherbrooke to work on real-time texture synthesis.
+<img src="https://user-images.githubusercontent.com/15910330/230186509-e4bb2d6f-668a-4404-8250-5f76c92ddfd1.png"  width="567" height="426">
+
+This project is a script repository to test our texture synthesis scripts and image processing classes using [our fork of Godot 4.0](https://github.com/DrLutzi/godot), in the [texsyn4 branch](https://github.com/DrLutzi/godot/tree/texsyn4).
+It is used by researchers at the BISOUS of the University of Sherbrooke to work on real-time texture synthesis. 
 
 ## Installation
 
 - Compile [our fork of Godot 4.0](https://github.com/DrLutzi/godot), which has the same requirements as Godot 4.0.
-- Download the resources and texsyn files of [my drive](https://drive.google.com/drive/folders/1i5tzNFtTbG-DTTWhwVybwerXT3g1NZnn?usp=sharing) and put them in the repository.
+- Download the resources and texsyn files of [this drive](https://drive.google.com/drive/folders/1i5tzNFtTbG-DTTWhwVybwerXT3g1NZnn?usp=sharing) and paste them into the repository.
 If you do not do that, you will need to re-create a new scene file (refer to section [Custom scene](#custom-scene))
 - Execute the godot editor using this repository as working folder, or with the project selection screen.
 
@@ -16,7 +18,8 @@ If you do not do that, you will need to re-create a new scene file (refer to sec
 
 Texsyn is made to represent textured surfaces with texture synthesis processes, especially tiling and blending (see [HN18](https://hal.inria.fr/hal-01824773/)) rather than periodic tilings.
 
-1. Create the surface.
+### Creating the surface.
+
 To create a surface with a stationary tiling and blending using 2 square tilings (see [LSD23](https://hal.science/hal-03964175/)):
 
 - Create any MeshInstance3D with its geometry (for instance, a plane)
@@ -28,25 +31,25 @@ To create a surface with a cyclostationary tiling and blending (for textures who
 - Attach the script [scripts/texsyn_cyclostationary_computer.gd](scripts/texsyn_cyclostationary_computer.gd) to the node
 - Set the textures you want for your surface in the script parameters.
 - Set the First Period Vector and Second Period Vector values in the script parameters. See [Cyclostationarity: Period vectors](cyclostationarity-choosing-period-vectors). 
-- Execute the scene once. The script will take a good while to compute the cyclostationary mean textures, required for cyclostationary texture synthesis, as well as a realization of the cyclostationary sampler.
+- Execute the scene once. The script will take several minutes to compute the cyclostationary mean textures, required for cyclostationary texture synthesis, as well as a realization of the cyclostationary sampler.
 - Create any MeshInstance3D with its geometry (for instance, a plane)
 - In its Material, attach [shaders/texsyn_cyclostationary_pbr.gdshader](shaders/texsyn_cyclostationary_pbr.gdshader).
 - Add your texture components, their respective mean, and the realization of the sampler in the appropriate shader parameters.
 
-2. Set the shader parameters.
+### Setting the shader parameters.
 Each shader was written by first generating the code of a StandardMaterial3D. As such, some parameters are not correct by default.
 Assuming every texture component is set, in order to get the classic default parameters, from top to bottom, you need to:
-- Set Albedo to a white color
-- Set Roughness to 1
-- Set Metallic texture channel to (1, 0, 0, 0) assuming the metallic map is on the red component
-- Set Specular to 0.5
-- Set Metallic to 1
-- Set Normal Scale to 1
-- Set AO texture channel to (1, 0, 0, 0) assuming the AO map is on the red component
-- Set Heightmap scale to 1
-- Set Heightmap Min Layers to 8
-- Set Heightmap Max Layers to 32
-- Set UV1 Scale to (1, 1, 1) (although you probably want to test out a large scale since you're here)
+- Set **Albedo** to a white color
+- Set **Roughness** to 1
+- Set **Metallic Texture Channel** to (1, 0, 0, 0) assuming the metallic map is on the red component
+- Set **Specular** to 0.5
+- Set **Metallic** to 1
+- Set **Normal Scale** to 1
+- Set **AO Texture Channel** to (1, 0, 0, 0) assuming the AO map is on the red component
+- Set **Heightmap Scale** to 1
+- Set **Heightmap Min Layers** to 8
+- Set **Heightmap Max Layers** to 32
+- Set **UV1 Scale** to (1, 1, 1) (although you probably want to test out a large scale since you're here)
 - If not already done, set each texture, and, for cyclostationarity, the realization of the sampler, and each spatially-varying mean.
 
 3. Optionnal: Camera
