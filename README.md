@@ -9,8 +9,10 @@ It is used by researchers at the BISOUS of the University of Sherbrooke to work 
 
 ## Installation
 
-- Compile [our fork of Godot 4.0](https://github.com/DrLutzi/godot), which has the same requirements as Godot 4.0.
-- Download the resources and texsyn files of [this drive](https://drive.google.com/drive/folders/1i5tzNFtTbG-DTTWhwVybwerXT3g1NZnn?usp=sharing) and paste them into the repository.
+- Get [our fork of Godot 4.0](https://github.com/DrLutzi/godot), which has the same requirements as Godot 4.
+- Switch to the texsyn4 branch and execute ``git submodule update --init`` to get the [Eigen library](https://gitlab.com/libeigen/eigen).
+- Compile godot (see [compiling godot from source](https://docs.godotengine.org/en/stable/contributing/development/compiling/index.html))
+- Download the resources and texsyn files of [this drive](https://drive.google.com/drive/folders/1i5tzNFtTbG-DTTWhwVybwerXT3g1NZnn?usp=sharing) and paste them into the repository. It contains some pre-computed files for a basic demo.
 If you do not do that, you will need to re-create a new scene file (refer to section [Custom scene](#custom-scene))
 - Execute the godot editor using this repository as working folder, or with the project selection screen.
 
@@ -26,12 +28,23 @@ To create a surface with a stationary tiling and blending using 2 square tilings
 - In its Material, attach [shaders/texsyn_stationary_pbr.gdshader](shaders/texsyn_stationary_pbr.gdshader)
 - Add any texture component you want in the shader parameters.
 
+To create a surface with an autocovariance-preserving tiling and blending using 2 square tilings (see [LSD23](https://hal.science/hal-03964175/)):
+
+- Create any node
+- Attach the script [scripts/texsyn_autocovariance_computer.gd](scripts/texsyn_autocovariance_computer.gd) to the node
+- Set the textures you want for your surface in the script parameters.
+- Set the size of the probability density function computed (Pdf size). Since the pdf is the autocovariance function, the latter needs to be computed, and the computation time increases quadratically with respect to the size of the textures. 256 is a good default size if you are in a hurry.
+- Execute the scene once. The script will take several minutes to compute the autocovariance-preserving mean textures as well as a realization of the sampler. It will be executed whenever the corresponding means and sampler realization are not found.
+- Create any MeshInstance3D with its geometry (for instance, a plane)
+- In its Material, attach [shaders/texsyn_cyclostationary_pbr.gdshader](shaders/texsyn_cyclostationary_pbr.gdshader).
+- Add your texture components, their respective mean, and the realization of the sampler in the appropriate shader parameters.
+
 To create a surface with a cyclostationary tiling and blending (for textures whose elements have a periodic global organisation, see [LSD21](https://hal.science/hal-03181139/)) using 2 square tilings: 
 - Create any node
 - Attach the script [scripts/texsyn_cyclostationary_computer.gd](scripts/texsyn_cyclostationary_computer.gd) to the node
 - Set the textures you want for your surface in the script parameters.
 - Set the First Period Vector and Second Period Vector values in the script parameters. See [Cyclostationarity: Period vectors](cyclostationarity-choosing-period-vectors). 
-- Execute the scene once. The script will take several minutes to compute the cyclostationary mean textures, required for cyclostationary texture synthesis, as well as a realization of the cyclostationary sampler.
+- Execute the scene once. The script will take several minutes to compute the cyclostationary mean textures, required for cyclostationary texture synthesis, as well as a realization of the cyclostationary sampler. It will be executed whenever the corresponding means and sampler realization are not found.
 - Create any MeshInstance3D with its geometry (for instance, a plane)
 - In its Material, attach [shaders/texsyn_cyclostationary_pbr.gdshader](shaders/texsyn_cyclostationary_pbr.gdshader).
 - Add your texture components, their respective mean, and the realization of the sampler in the appropriate shader parameters.
