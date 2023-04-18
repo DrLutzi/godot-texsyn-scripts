@@ -1,6 +1,6 @@
 extends Node3D
 
-#script that computes and saves in EXR files the textures necessary
+#script that computes and saves in PNG/EXR files the textures necessary
 #for rendering the provided textures with the texsyn module.
 
 @export var texture_albedo: Texture
@@ -16,6 +16,7 @@ extends Node3D
 @export var secondPeriodVector = Vector2(0.0, 1.0)
 @export_dir var texsynDirectoryName = "texsyn"
 @export var centerExemplars = false
+var proctex = ProceduralSampling.new()
 
 func checkMeanExistence(tex : Texture):
 	var meanTexFilename = "res://{dir}/mean_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
@@ -26,7 +27,7 @@ func saveMean(tex: Texture, mean: Image):
 		var meanTexFilename = "res://{dir}/mean_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 		mean.save_png(meanTexFilename)
 		
-func centerExemplar(proctex: ProceduralSampling, image: Image, mean: Image):
+func centerExemplar(image: Image, mean: Image):
 	if image != null :
 		if centerExemplars :
 			proctex.centerExemplar(image, mean)
@@ -41,6 +42,12 @@ func saveExemplar(tex: Texture, mean: Image):
 	if tex != null and centerExemplars :
 		var meanTexFilename = "res://{dir}/exemplar_{id}.exr".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 		mean.save_exr(meanTexFilename)
+		
+func saveDataFromParameters(mean: Image, image: Image, texture: Texture):
+	mean.resize(meanSize, meanSize)
+	saveMean(texture, mean)
+	centerExemplar(image, mean)
+	saveExemplar(texture, image)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -58,8 +65,6 @@ func _ready():
 	if(secondPeriodCleansed[1]>1.0) :
 		secondPeriodCleansed[1] = 1.0/secondPeriodCleansed[1]
 	
-	
-	var proctex = ProceduralSampling.new()
 	proctex.set_cyclostationaryPeriods(firstPeriodCleansed, secondPeriodCleansed)
 	proctex.set_meanAccuracy(meanPrecision)
 	proctex.set_meanSize(meanSize)
@@ -137,45 +142,33 @@ func _ready():
 	
 	if computeAlbedo :
 		meanAlbedo = Image.create(width, height, false, Image.FORMAT_RGBF)
-		proctex.spatiallyVaryingMeanToAlbedo(meanAlbedo)
-		saveMean(texture_albedo, meanAlbedo)
-		centerExemplar(proctex, exemplarAlbedo, meanAlbedo)
-		saveExemplar(texture_albedo, exemplarAlbedo)
+		proctex.spatiallyVaryingMeanToAO(meanAlbedo)
+		saveDataFromParameters(meanAlbedo, exemplarAlbedo, texture_albedo)
 		
 	if computeNormal :
 		meanNormal = Image.create(width, height, false, Image.FORMAT_RGBF)
-		proctex.spatiallyVaryingMeanToNormal(meanNormal)
-		saveMean(texture_normal, meanNormal)
-		centerExemplar(proctex, exemplarNormal, meanNormal)
-		saveExemplar(texture_normal, exemplarNormal)
+		proctex.spatiallyVaryingMeanToAO(meanNormal)
+		saveDataFromParameters(meanNormal, exemplarNormal, texture_normal)
 		
 	if computeHeight :
 		meanHeight = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToHeight(meanHeight)
-		saveMean(texture_height, meanHeight)
-		centerExemplar(proctex, exemplarHeight, meanHeight)
-		saveExemplar(texture_height, exemplarHeight)
+		proctex.spatiallyVaryingMeanToAO(meanHeight)
+		saveDataFromParameters(meanHeight, exemplarHeight, texture_height)
 		
 	if computeRoughness :
 		meanRoughness = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToRoughness(meanRoughness)
-		saveMean(texture_roughness, meanRoughness)
-		centerExemplar(proctex, exemplarRoughness, meanRoughness)
-		saveExemplar(texture_roughness, exemplarRoughness)
+		proctex.spatiallyVaryingMeanToAO(meanRoughness)
+		saveDataFromParameters(meanRoughness, exemplarRoughness, texture_roughness)
 		
 	if computeMetallic :
 		meanMetallic = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToMetallic(meanMetallic)
-		saveMean(texture_metallic, meanMetallic)
-		centerExemplar(proctex, exemplarMetallic, meanMetallic)
-		saveExemplar(texture_metallic, exemplarMetallic)
+		proctex.spatiallyVaryingMeanToAO(meanMetallic)
+		saveDataFromParameters(meanMetallic, exemplarMetallic, texture_metallic)
 
 	if computeAO :
 		meanAO = Image.create(width, height, false, Image.FORMAT_RF)
 		proctex.spatiallyVaryingMeanToAO(meanAO)
-		saveMean(texture_ao, meanAO)
-		centerExemplar(proctex, exemplarAO, meanAO)
-		saveExemplar(texture_ao, exemplarAO)
+		saveDataFromParameters(meanAO, exemplarAO, texture_ao)
 
 	var srName = "res://{dir}/realization_{t00}_{t01}_{t10}_{t11}.exr"
 	srName = srName.format({"dir":texsynDirectoryName, "t00":"%.1f" % firstPeriodVector.x, "t01":"%.1f" % firstPeriodVector.y, "t10":"%.1f" % secondPeriodVector.x, "t11":"%.1f" % secondPeriodVector.y})

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://erycks8vfv55"]
+[gd_scene load_steps=40 format=3 uid="uid://erycks8vfv55"]
 
 [ext_resource type="Script" path="res://scripts/texsyn_cyclostationary_computer.gd" id="1_16i11"]
 [ext_resource type="Texture2D" uid="uid://dvt42t3el06ud" path="res://resources/leatherarmor/TexturesCom_LeatherArmor_1K_albedo.png" id="2_xoq7j"]
@@ -9,21 +9,27 @@
 [ext_resource type="Texture2D" uid="uid://c57eenvil7frd" path="res://resources/leatherarmor/TexturesCom_LeatherArmor_1K_ao.png" id="7_hj3ge"]
 [ext_resource type="Shader" path="res://shaders/texsyn_stationary_pbr.gdshader" id="8_l7os0"]
 [ext_resource type="Script" path="res://scripts/texsyn_autocovariance_computer.gd" id="8_r7jgd"]
+[ext_resource type="Texture2D" uid="uid://x658x21cmkbb" path="res://resources/oldcopper/TexturesCom_OldCopper_Aged_1K_albedo.png" id="9_c1idv"]
 [ext_resource type="Shader" path="res://shaders/texsyn_cyclostationary_pbr.gdshader" id="9_rw7up"]
-[ext_resource type="Texture2D" uid="uid://dukdlhf2wl73f" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_albedo.png" id="10_vsevi"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_xiq6g"]
+[ext_resource type="Texture2D" uid="uid://c531gn8mr8cqt" path="res://resources/oldcopper/TexturesCom_OldCopper_Aged_1K_normal.png" id="10_xju83"]
 [ext_resource type="Texture2D" uid="uid://cs1p1sdmbkxx5" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_albedo.png" id="11_5ky7n"]
-[ext_resource type="Texture2D" uid="uid://iycvkpueiuek" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_ao.png" id="11_u8kqe"]
-[ext_resource type="Texture2D" uid="uid://48e4brh0w0km" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_height.png" id="12_iebxm"]
+[ext_resource type="Texture2D" uid="uid://ltbwrnm782hp" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_albedo.png" id="11_a3u66"]
+[ext_resource type="Texture2D" uid="uid://dbf4rdfy23mb1" path="res://resources/oldcopper/TexturesCom_OldCopper_Aged_1K_height.png" id="11_m7v1i"]
+[ext_resource type="Texture2D" uid="uid://iycvkpueiuek" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_ao.png" id="12_gaf7u"]
+[ext_resource type="Texture2D" uid="uid://dbam1bvraeftq" path="res://resources/oldcopper/TexturesCom_OldCopper_Aged_1K_roughness.png" id="12_m78uk"]
 [ext_resource type="Texture2D" uid="uid://dx5vg4kqgjtkl" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_ao.png" id="12_xg10g"]
 [ext_resource type="Texture2D" uid="uid://bg6viy3pj2v2h" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_height.png" id="13_0v04v"]
-[ext_resource type="Texture2D" uid="uid://cehgiqog21r46" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_metallic.png" id="13_1ths7"]
+[ext_resource type="Texture2D" uid="uid://br8r1d15sjiqs" path="res://resources/oldcopper/TexturesCom_OldCopper_Aged_1K_metallic.png" id="13_n3v5c"]
+[ext_resource type="Texture2D" uid="uid://48e4brh0w0km" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_height.png" id="13_xi721"]
 [ext_resource type="Texture2D" uid="uid://cjnn8kl0rgtbr" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_metallic.png" id="14_1nfbg"]
-[ext_resource type="Texture2D" uid="uid://coccb8nnpr8y2" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_normal.png" id="14_qt4o0"]
-[ext_resource type="Texture2D" uid="uid://fmoutsim330d" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_roughness.png" id="15_d2dfb"]
+[ext_resource type="Texture2D" uid="uid://cehgiqog21r46" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_metallic.png" id="14_cpkwd"]
+[ext_resource type="Texture2D" uid="uid://67667m4fp6de" path="res://resources/oldcopper/TexturesCom_OldCopper_Aged_1K_ao.png" id="14_tmpv1"]
 [ext_resource type="Texture2D" uid="uid://bgl333w8i30ef" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_normal.png" id="15_kdeuh"]
+[ext_resource type="Texture2D" uid="uid://coccb8nnpr8y2" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_normal.png" id="15_reck6"]
 [ext_resource type="Texture2D" uid="uid://cpjk2ksdq1acw" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_roughness.png" id="16_dfge7"]
 [ext_resource type="Texture2D" uid="uid://dekunnf43tru2" path="res://texsyn/realization_5.0_0.0_10.0_10.0.exr" id="16_eul7n"]
+[ext_resource type="Texture2D" uid="uid://fmoutsim330d" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_roughness.png" id="16_hvbjj"]
 [ext_resource type="Texture2D" uid="uid://jlcda0mc0y3n" path="res://texsyn/realization_acv_default.exr" id="17_venxp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mwdi4"]
@@ -100,13 +106,13 @@ shader_parameter/texture_roughness = ExtResource("5_7i0yd")
 shader_parameter/texture_normal = ExtResource("3_ldc3t")
 shader_parameter/texture_ambient_occlusion = ExtResource("7_hj3ge")
 shader_parameter/texture_heightmap = ExtResource("4_yf30t")
-shader_parameter/samplerRealization = ExtResource("16_o7ouj")
-shader_parameter/mean_albedo = ExtResource("10_vsevi")
-shader_parameter/mean_normal = ExtResource("14_5s6ac")
-shader_parameter/mean_roughness = ExtResource("15_8a3nd")
-shader_parameter/mean_metallic = ExtResource("13_4ysrk")
-shader_parameter/mean_heightmap = ExtResource("12_jvnaq")
-shader_parameter/mean_ambient_occlusion = ExtResource("11_8icmr")
+shader_parameter/samplerRealization = ExtResource("16_eul7n")
+shader_parameter/mean_albedo = ExtResource("11_a3u66")
+shader_parameter/mean_normal = ExtResource("15_reck6")
+shader_parameter/mean_roughness = ExtResource("16_hvbjj")
+shader_parameter/mean_metallic = ExtResource("14_cpkwd")
+shader_parameter/mean_heightmap = ExtResource("13_xi721")
+shader_parameter/mean_ambient_occlusion = ExtResource("12_gaf7u")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4xdjm"]
 material = SubResource("ShaderMaterial_su3qx")
@@ -171,8 +177,20 @@ texture_metallic = ExtResource("6_1jjfu")
 texture_ao = ExtResource("7_hj3ge")
 pdfSize = 256
 
+[node name="Autocovariance computer 2" type="Node3D" parent="."]
+script = ExtResource("8_r7jgd")
+texture_albedo = ExtResource("9_c1idv")
+texture_normal = ExtResource("10_xju83")
+texture_height = ExtResource("11_m7v1i")
+texture_roughness = ExtResource("12_m78uk")
+texture_metallic = ExtResource("13_n3v5c")
+texture_ao = ExtResource("14_tmpv1")
+pdfSize = 256
+instanceName = "copper"
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.438638, 0.898664, 0, -0.898664, -0.438638, 0, 3.53133, 0)
+light_energy = 0.2
 
 [node name="Periodic" type="MeshInstance3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -100, 0, -100)
