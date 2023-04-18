@@ -28,7 +28,7 @@ To create a surface with a stationary tiling and blending using 2 square tilings
 - In its Material, attach [shaders/texsyn_stationary_pbr.gdshader](shaders/texsyn_stationary_pbr.gdshader)
 - Add any texture component you want in the shader parameters.
 
-To create a surface with an autocovariance-preserving tiling and blending using 2 square tilings (see [LSD23](https://hal.science/hal-03964175/)):
+To create a surface with an autocovariance-preserving tiling and blending (see [LSD23](https://hal.science/hal-03964175/)) using 2 square tilings :
 
 - Create any node
 - Attach the script [scripts/texsyn_autocovariance_computer.gd](scripts/texsyn_autocovariance_computer.gd) to the node
