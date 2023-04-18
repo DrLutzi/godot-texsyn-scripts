@@ -18,13 +18,11 @@ extends Node3D
 @export var centerExemplars = false
 
 func checkMeanExistence(tex : Texture):
-	var rid = tex.get_rid().get_id()
 	var meanTexFilename = "res://{dir}/mean_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 	return FileAccess.file_exists(meanTexFilename)
 
 func saveMean(tex: Texture, mean: Image):
 	if tex != null:
-		var rid = tex.get_rid().get_id()
 		var meanTexFilename = "res://{dir}/mean_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 		mean.save_png(meanTexFilename)
 		
@@ -36,13 +34,11 @@ func centerExemplar(proctex: ProceduralSampling, image: Image, mean: Image):
 		mean.generate_mipmaps()
 
 func checkExemplarExistence(tex : Texture):
-	var rid = tex.get_rid().get_id()
 	var meanTexFilename = "res://{dir}/exemplar_{id}.exr".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 	return FileAccess.file_exists(meanTexFilename)
 
 func saveExemplar(tex: Texture, mean: Image):
 	if tex != null and centerExemplars :
-		var rid = tex.get_rid().get_id()
 		var meanTexFilename = "res://{dir}/exemplar_{id}.exr".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 		mean.save_exr(meanTexFilename)
 
@@ -91,7 +87,6 @@ func _ready():
 	var computeMetallic = texture_metallic != null and !checkMeanExistence(texture_metallic)
 	var computeAO = texture_ao != null and !checkMeanExistence(texture_ao)
 	
-	var meanLoaded = true
 	if computeAlbedo:
 		exemplarAlbedo = Image.new()
 		exemplarAlbedo.copy_from(texture_albedo.get_image())

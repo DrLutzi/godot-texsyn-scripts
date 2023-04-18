@@ -10,7 +10,7 @@
 [ext_resource type="Shader" path="res://shaders/texsyn_stationary_pbr.gdshader" id="8_l7os0"]
 [ext_resource type="Script" path="res://scripts/texsyn_autocovariance_computer.gd" id="8_r7jgd"]
 [ext_resource type="Shader" path="res://shaders/texsyn_cyclostationary_pbr.gdshader" id="9_rw7up"]
-[ext_resource type="Texture2D" uid="uid://ltbwrnm782hp" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_albedo.png" id="10_kk7ld"]
+[ext_resource type="Texture2D" uid="uid://dukdlhf2wl73f" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_albedo.png" id="10_vsevi"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_xiq6g"]
 [ext_resource type="Texture2D" uid="uid://cs1p1sdmbkxx5" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_albedo.png" id="11_5ky7n"]
 [ext_resource type="Texture2D" uid="uid://iycvkpueiuek" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_ao.png" id="11_u8kqe"]
@@ -100,13 +100,13 @@ shader_parameter/texture_roughness = ExtResource("5_7i0yd")
 shader_parameter/texture_normal = ExtResource("3_ldc3t")
 shader_parameter/texture_ambient_occlusion = ExtResource("7_hj3ge")
 shader_parameter/texture_heightmap = ExtResource("4_yf30t")
-shader_parameter/samplerRealization = ExtResource("16_eul7n")
-shader_parameter/mean_albedo = ExtResource("10_kk7ld")
-shader_parameter/mean_normal = ExtResource("14_qt4o0")
-shader_parameter/mean_roughness = ExtResource("15_d2dfb")
-shader_parameter/mean_metallic = ExtResource("13_1ths7")
-shader_parameter/mean_heightmap = ExtResource("12_iebxm")
-shader_parameter/mean_ambient_occlusion = ExtResource("11_u8kqe")
+shader_parameter/samplerRealization = ExtResource("16_o7ouj")
+shader_parameter/mean_albedo = ExtResource("10_vsevi")
+shader_parameter/mean_normal = ExtResource("14_5s6ac")
+shader_parameter/mean_roughness = ExtResource("15_8a3nd")
+shader_parameter/mean_metallic = ExtResource("13_4ysrk")
+shader_parameter/mean_heightmap = ExtResource("12_jvnaq")
+shader_parameter/mean_ambient_occlusion = ExtResource("11_8icmr")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4xdjm"]
 material = SubResource("ShaderMaterial_su3qx")
