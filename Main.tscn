@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://erycks8vfv55"]
+[gd_scene load_steps=34 format=3 uid="uid://erycks8vfv55"]
 
 [ext_resource type="Script" path="res://scripts/texsyn_cyclostationary_computer.gd" id="1_16i11"]
 [ext_resource type="Texture2D" uid="uid://dvt42t3el06ud" path="res://resources/leatherarmor/TexturesCom_LeatherArmor_1K_albedo.png" id="2_xoq7j"]
@@ -8,15 +8,23 @@
 [ext_resource type="Texture2D" uid="uid://caklf5rlg7ric" path="res://resources/leatherarmor/TexturesCom_LeatherArmor_1K_metallic.png" id="6_1jjfu"]
 [ext_resource type="Texture2D" uid="uid://c57eenvil7frd" path="res://resources/leatherarmor/TexturesCom_LeatherArmor_1K_ao.png" id="7_hj3ge"]
 [ext_resource type="Shader" path="res://shaders/texsyn_stationary_pbr.gdshader" id="8_l7os0"]
+[ext_resource type="Script" path="res://scripts/texsyn_autocovariance_computer.gd" id="8_r7jgd"]
 [ext_resource type="Shader" path="res://shaders/texsyn_cyclostationary_pbr.gdshader" id="9_rw7up"]
 [ext_resource type="Texture2D" uid="uid://ltbwrnm782hp" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_albedo.png" id="10_kk7ld"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_xiq6g"]
+[ext_resource type="Texture2D" uid="uid://cs1p1sdmbkxx5" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_albedo.png" id="11_5ky7n"]
 [ext_resource type="Texture2D" uid="uid://iycvkpueiuek" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_ao.png" id="11_u8kqe"]
 [ext_resource type="Texture2D" uid="uid://48e4brh0w0km" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_height.png" id="12_iebxm"]
+[ext_resource type="Texture2D" uid="uid://dx5vg4kqgjtkl" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_ao.png" id="12_xg10g"]
+[ext_resource type="Texture2D" uid="uid://bg6viy3pj2v2h" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_height.png" id="13_0v04v"]
 [ext_resource type="Texture2D" uid="uid://cehgiqog21r46" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_metallic.png" id="13_1ths7"]
+[ext_resource type="Texture2D" uid="uid://cjnn8kl0rgtbr" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_metallic.png" id="14_1nfbg"]
 [ext_resource type="Texture2D" uid="uid://coccb8nnpr8y2" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_normal.png" id="14_qt4o0"]
 [ext_resource type="Texture2D" uid="uid://fmoutsim330d" path="res://texsyn/mean_TexturesCom_LeatherArmor_1K_roughness.png" id="15_d2dfb"]
+[ext_resource type="Texture2D" uid="uid://bgl333w8i30ef" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_normal.png" id="15_kdeuh"]
+[ext_resource type="Texture2D" uid="uid://cpjk2ksdq1acw" path="res://texsyn/mean_acv_TexturesCom_LeatherArmor_1K_roughness.png" id="16_dfge7"]
 [ext_resource type="Texture2D" uid="uid://dekunnf43tru2" path="res://texsyn/realization_5.0_0.0_10.0_10.0.exr" id="16_eul7n"]
+[ext_resource type="Texture2D" uid="uid://jlcda0mc0y3n" path="res://texsyn/realization_acv_default.exr" id="17_venxp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mwdi4"]
 albedo_texture = ExtResource("2_xoq7j")
@@ -103,6 +111,43 @@ shader_parameter/mean_ambient_occlusion = ExtResource("11_u8kqe")
 [sub_resource type="PlaneMesh" id="PlaneMesh_4xdjm"]
 material = SubResource("ShaderMaterial_su3qx")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g3uf1"]
+render_priority = 0
+shader = ExtResource("9_rw7up")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = null
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 1.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/ao_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/ao_light_affect = null
+shader_parameter/heightmap_scale = 1.0
+shader_parameter/heightmap_min_layers = 8
+shader_parameter/heightmap_max_layers = 32
+shader_parameter/heightmap_flip = null
+shader_parameter/uv1_scale = Vector3(50, 50, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("2_xoq7j")
+shader_parameter/texture_metallic = ExtResource("6_1jjfu")
+shader_parameter/texture_roughness = ExtResource("5_7i0yd")
+shader_parameter/texture_normal = ExtResource("3_ldc3t")
+shader_parameter/texture_ambient_occlusion = ExtResource("7_hj3ge")
+shader_parameter/texture_heightmap = ExtResource("4_yf30t")
+shader_parameter/samplerRealization = ExtResource("17_venxp")
+shader_parameter/mean_albedo = ExtResource("11_5ky7n")
+shader_parameter/mean_normal = ExtResource("15_kdeuh")
+shader_parameter/mean_roughness = ExtResource("16_dfge7")
+shader_parameter/mean_metallic = ExtResource("14_1nfbg")
+shader_parameter/mean_heightmap = ExtResource("13_0v04v")
+shader_parameter/mean_ambient_occlusion = ExtResource("12_xg10g")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lur6g"]
+material = SubResource("ShaderMaterial_g3uf1")
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Cyclostationary computer" type="Node3D" parent="."]
@@ -116,11 +161,21 @@ texture_ao = ExtResource("7_hj3ge")
 firstPeriodVector = Vector2(5, 0)
 secondPeriodVector = Vector2(10, 10)
 
+[node name="Autocovariance computer" type="Node3D" parent="."]
+script = ExtResource("8_r7jgd")
+texture_albedo = ExtResource("2_xoq7j")
+texture_normal = ExtResource("3_ldc3t")
+texture_height = ExtResource("4_yf30t")
+texture_roughness = ExtResource("5_7i0yd")
+texture_metallic = ExtResource("6_1jjfu")
+texture_ao = ExtResource("7_hj3ge")
+pdfSize = 256
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.438638, 0.898664, 0, -0.898664, -0.438638, 0, 3.53133, 0)
 
 [node name="Periodic" type="MeshInstance3D" parent="."]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, -100)
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -100, 0, -100)
 mesh = SubResource("PlaneMesh_ax73w")
 
 [node name="Stationary" type="MeshInstance3D" parent="."]
@@ -135,3 +190,7 @@ mesh = SubResource("PlaneMesh_4xdjm")
 transform = Transform3D(1, 0, 0, 0, 0.964787, 0.263031, 0, -0.263031, 0.964787, 0, 38.4159, 0)
 fov = 90.0
 script = ExtResource("10_xiq6g")
+
+[node name="Autocovariance" type="MeshInstance3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 100, 0, -100)
+mesh = SubResource("PlaneMesh_lur6g")

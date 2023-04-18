@@ -9,23 +9,23 @@ extends Node3D
 @export var texture_roughness: Texture
 @export var texture_metallic: Texture
 @export var texture_ao: Texture
+@export var pdfSize = 512
 @export var meanSize = 1024
 @export var meanPrecision = 256
-@export var realizationSize = 256
-@export var firstPeriodVector = Vector2(1.0, 0.0)
-@export var secondPeriodVector = Vector2(0.0, 1.0)
+@export var realizationSize = 512
+@export var instanceName = "default"
 @export_dir var texsynDirectoryName = "texsyn"
 @export var centerExemplars = false
 
 func checkMeanExistence(tex : Texture):
 	var rid = tex.get_rid().get_id()
-	var meanTexFilename = "res://{dir}/mean_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
+	var meanTexFilename = "res://{dir}/mean_acv_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 	return FileAccess.file_exists(meanTexFilename)
 
 func saveMean(tex: Texture, mean: Image):
 	if tex != null:
 		var rid = tex.get_rid().get_id()
-		var meanTexFilename = "res://{dir}/mean_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
+		var meanTexFilename = "res://{dir}/mean_acv_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 		mean.save_png(meanTexFilename)
 		
 func centerExemplar(proctex: ProceduralSampling, image: Image, mean: Image):
@@ -37,13 +37,13 @@ func centerExemplar(proctex: ProceduralSampling, image: Image, mean: Image):
 
 func checkExemplarExistence(tex : Texture):
 	var rid = tex.get_rid().get_id()
-	var meanTexFilename = "res://{dir}/exemplar_{id}.exr".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
+	var meanTexFilename = "res://{dir}/exemplar_acv_{id}.exr".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 	return FileAccess.file_exists(meanTexFilename)
 
 func saveExemplar(tex: Texture, mean: Image):
 	if tex != null and centerExemplars :
 		var rid = tex.get_rid().get_id()
-		var meanTexFilename = "res://{dir}/exemplar_{id}.exr".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
+		var meanTexFilename = "res://{dir}/exemplar_acv_{id}.exr".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 		mean.save_exr(meanTexFilename)
 
 # Called when the node enters the scene tree for the first time.
@@ -51,20 +51,7 @@ func _ready():
 	var dir = DirAccess.open("res://")
 	dir.make_dir(texsynDirectoryName)
 	
-	var firstPeriodCleansed = firstPeriodVector
-	var secondPeriodCleansed = secondPeriodVector
-	if(firstPeriodCleansed[0]>1.0) :
-		firstPeriodCleansed[0] = 1.0/firstPeriodCleansed[0]
-	if(firstPeriodCleansed[1]>1.0) :
-		firstPeriodCleansed[1] = 1.0/firstPeriodCleansed[1]
-	if(secondPeriodCleansed[0]>1.0) :
-		secondPeriodCleansed[0] = 1.0/secondPeriodCleansed[0]
-	if(secondPeriodCleansed[1]>1.0) :
-		secondPeriodCleansed[1] = 1.0/secondPeriodCleansed[1]
-	
-	
 	var proctex = ProceduralSampling.new()
-	proctex.set_cyclostationaryPeriods(firstPeriodCleansed, secondPeriodCleansed)
 	proctex.set_meanAccuracy(meanPrecision)
 	proctex.set_meanSize(meanSize)
 	
@@ -96,6 +83,7 @@ func _ready():
 		exemplarAlbedo = Image.new()
 		exemplarAlbedo.copy_from(texture_albedo.get_image())
 		exemplarAlbedo.convert(Image.FORMAT_RGBF)
+		exemplarAlbedo.resize(pdfSize, pdfSize)
 		proctex.set_albedo(exemplarAlbedo)
 		width = exemplarAlbedo.get_width()
 		height = exemplarAlbedo.get_height()
@@ -104,6 +92,7 @@ func _ready():
 		exemplarNormal = Image.new()
 		exemplarNormal.copy_from(texture_normal.get_image())
 		exemplarNormal.convert(Image.FORMAT_RGBF)
+		exemplarNormal.resize(pdfSize, pdfSize)
 		proctex.set_normal(exemplarNormal)
 		width = exemplarNormal.get_width()
 		height = exemplarNormal.get_height()
@@ -112,6 +101,7 @@ func _ready():
 		exemplarHeight = Image.new()
 		exemplarHeight.copy_from(texture_height.get_image())
 		exemplarHeight.convert(Image.FORMAT_RF)
+		exemplarHeight.resize(pdfSize, pdfSize)
 		proctex.set_height(exemplarHeight)
 		width = exemplarHeight.get_width()
 		height = exemplarHeight.get_height()
@@ -120,6 +110,7 @@ func _ready():
 		exemplarRoughness = Image.new()
 		exemplarRoughness.copy_from(texture_roughness.get_image())
 		exemplarRoughness.convert(Image.FORMAT_RF)
+		exemplarRoughness.resize(pdfSize, pdfSize)
 		proctex.set_roughness(exemplarRoughness)
 		width = exemplarRoughness.get_width()
 		height = exemplarRoughness.get_height()
@@ -128,6 +119,7 @@ func _ready():
 		exemplarMetallic = Image.new()
 		exemplarMetallic.copy_from(texture_metallic.get_image())
 		exemplarMetallic.convert(Image.FORMAT_RF)
+		exemplarMetallic.resize(pdfSize, pdfSize)
 		proctex.set_metallic(exemplarMetallic)
 		width = exemplarMetallic.get_width()
 		height = exemplarMetallic.get_height()
@@ -136,9 +128,19 @@ func _ready():
 		exemplarAO = Image.new()
 		exemplarAO.copy_from(texture_ao.get_image())
 		exemplarAO.convert(Image.FORMAT_RF)
+		exemplarAO.resize(pdfSize, pdfSize)
 		proctex.set_ao(exemplarAO)
 		width = exemplarAO.get_width()
 		height = exemplarAO.get_height()
+		
+	if computeAlbedo or computeNormal or computeHeight or computeRoughness or computeMetallic or computeAO:
+		proctex.computeAutocovarianceSampler()
+		var srName = "res://{dir}/realization_acv_{id}.exr"
+		srName = srName.format({"dir":texsynDirectoryName, "id":instanceName})
+		if !FileAccess.file_exists(srName):
+			var realization = Image.new()
+			proctex.samplerRealizationToImage(realization, realizationSize)
+			realization.save_exr(srName)
 	
 	if computeAlbedo :
 		meanAlbedo = Image.create(width, height, false, Image.FORMAT_RGBF)
@@ -181,10 +183,3 @@ func _ready():
 		saveMean(texture_ao, meanAO)
 		centerExemplar(proctex, exemplarAO, meanAO)
 		saveExemplar(texture_ao, exemplarAO)
-
-	var srName = "res://{dir}/realization_{t00}_{t01}_{t10}_{t11}.exr"
-	srName = srName.format({"dir":texsynDirectoryName, "t00":"%.1f" % firstPeriodVector.x, "t01":"%.1f" % firstPeriodVector.y, "t10":"%.1f" % secondPeriodVector.x, "t11":"%.1f" % secondPeriodVector.y})
-	if !FileAccess.file_exists(srName):
-		var realization = Image.new()
-		proctex.samplerRealizationToImage(realization, realizationSize)
-		realization.save_exr(srName)
