@@ -15,6 +15,7 @@ extends Node3D
 @export var realizationSize = 512
 @export var instanceName = "default"
 @export_dir var texsynDirectoryName = "texsyn"
+@export var exportPdf = false
 @export var centerExemplars = false
 var proctex = ProceduralSampling.new()
 
@@ -142,7 +143,12 @@ func _ready():
 		if !FileAccess.file_exists(srName):
 			var realization = Image.new()
 			proctex.samplerRealizationToImage(realization, realizationSize)
-			#Save image here
+			if exportPdf:
+				var pdf = Image.new()
+				proctex.samplerPdfToImage(pdf)
+				var srPdfName = "res://{dir}/pdf_{id}.png"
+				srPdfName = srPdfName.format({"dir":texsynDirectoryName, "id":instanceName})
+				pdf.save_png(srPdfName)
 			realization.save_exr(srName)
 	
 	if computeAlbedo :
