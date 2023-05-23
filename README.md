@@ -68,6 +68,7 @@ Assuming every texture component is set, in order to get the classic default par
 - Set **Heightmap Scale** to 1
 - Set **Heightmap Min Layers** to 8
 - Set **Heightmap Max Layers** to 32
+- Set **Heightmap Flip** to (1, 1)
 - Set **UV1 Scale** to (1, 1, 1) (although you probably want to test out a large scale since you're here)
 - If not already done, set each texture, and, for cyclostationarity, the realization of the sampler, and each spatially-varying mean.
 
