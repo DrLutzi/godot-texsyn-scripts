@@ -96,7 +96,7 @@ func _ready():
 		exemplarAlbedo = Image.new()
 		exemplarAlbedo.copy_from(texture_albedo.get_image())
 		exemplarAlbedo.convert(Image.FORMAT_RGBF)
-		proctex.set_albedo(exemplarAlbedo)
+		proctex.set_component(ProceduralSampling.ALBEDO, exemplarAlbedo)
 		width = exemplarAlbedo.get_width()
 		height = exemplarAlbedo.get_height()
 
@@ -104,7 +104,7 @@ func _ready():
 		exemplarNormal = Image.new()
 		exemplarNormal.copy_from(texture_normal.get_image())
 		exemplarNormal.convert(Image.FORMAT_RGBF)
-		proctex.set_normal(exemplarNormal)
+		proctex.set_component(ProceduralSampling.NORMAL, exemplarNormal)
 		width = exemplarNormal.get_width()
 		height = exemplarNormal.get_height()
 	
@@ -112,7 +112,7 @@ func _ready():
 		exemplarHeight = Image.new()
 		exemplarHeight.copy_from(texture_height.get_image())
 		exemplarHeight.convert(Image.FORMAT_RF)
-		proctex.set_height(exemplarHeight)
+		proctex.set_component(ProceduralSampling.HEIGHT, exemplarHeight)
 		width = exemplarHeight.get_width()
 		height = exemplarHeight.get_height()
 	
@@ -120,7 +120,7 @@ func _ready():
 		exemplarRoughness = Image.new()
 		exemplarRoughness.copy_from(texture_roughness.get_image())
 		exemplarRoughness.convert(Image.FORMAT_RF)
-		proctex.set_roughness(exemplarRoughness)
+		proctex.set_component(ProceduralSampling.ROUGHNESS, exemplarRoughness)
 		width = exemplarRoughness.get_width()
 		height = exemplarRoughness.get_height()
 	
@@ -128,7 +128,7 @@ func _ready():
 		exemplarMetallic = Image.new()
 		exemplarMetallic.copy_from(texture_metallic.get_image())
 		exemplarMetallic.convert(Image.FORMAT_RF)
-		proctex.set_metallic(exemplarMetallic)
+		proctex.set_component(ProceduralSampling.METALLIC, exemplarMetallic)
 		width = exemplarMetallic.get_width()
 		height = exemplarMetallic.get_height()
 
@@ -136,38 +136,38 @@ func _ready():
 		exemplarAO = Image.new()
 		exemplarAO.copy_from(texture_ao.get_image())
 		exemplarAO.convert(Image.FORMAT_RF)
-		proctex.set_ao(exemplarAO)
+		proctex.set_component(ProceduralSampling.AMBIENT_OCCLUSION, exemplarAO)
 		width = exemplarAO.get_width()
 		height = exemplarAO.get_height()
 	
 	if computeAlbedo :
 		meanAlbedo = Image.create(width, height, false, Image.FORMAT_RGBF)
-		proctex.spatiallyVaryingMeanToAO(meanAlbedo)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.ALBEDO, meanAlbedo)
 		saveDataFromParameters(meanAlbedo, exemplarAlbedo, texture_albedo)
 		
 	if computeNormal :
 		meanNormal = Image.create(width, height, false, Image.FORMAT_RGBF)
-		proctex.spatiallyVaryingMeanToAO(meanNormal)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.NORMAL, meanNormal)
 		saveDataFromParameters(meanNormal, exemplarNormal, texture_normal)
 		
 	if computeHeight :
 		meanHeight = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToAO(meanHeight)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.HEIGHT, meanHeight)
 		saveDataFromParameters(meanHeight, exemplarHeight, texture_height)
 		
 	if computeRoughness :
 		meanRoughness = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToAO(meanRoughness)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.ROUGHNESS, meanRoughness)
 		saveDataFromParameters(meanRoughness, exemplarRoughness, texture_roughness)
 		
 	if computeMetallic :
 		meanMetallic = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToAO(meanMetallic)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.METALLIC, meanMetallic)
 		saveDataFromParameters(meanMetallic, exemplarMetallic, texture_metallic)
 
 	if computeAO :
 		meanAO = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToAO(meanAO)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.AMBIENT_OCCLUSION, meanAO)
 		saveDataFromParameters(meanAO, exemplarAO, texture_ao)
 
 	var srName = "res://{dir}/realization_{t00}_{t01}_{t10}_{t11}.exr"

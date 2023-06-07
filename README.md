@@ -56,27 +56,21 @@ To create a surface with a cyclostationary tiling and blending (for textures who
 - [Set the shader parameters](setting-the-shader-parameters)
 
 ### Setting the shader parameters.
-Each shader was written by first generating the code of a StandardMaterial3D. As such, some parameters are not correct by default.
-Assuming every texture component is set, in order to get the classic default parameters, from top to bottom, you need to:
-- Set **Albedo** to a white color
-- Set **Roughness** to 1
-- Set **Metallic Texture Channel** to (1, 0, 0, 0) assuming the metallic map is on the red component
-- Set **Specular** to 0.5
-- Set **Metallic** to 1
-- Set **Normal Scale** to 1
-- Set **AO Texture Channel** to (1, 0, 0, 0) assuming the AO map is on the red component
-- Set **Heightmap Scale** to 1
-- Set **Heightmap Min Layers** to 8
-- Set **Heightmap Max Layers** to 32
-- Set **Heightmap Flip** to (1, 1)
-- Set **UV1 Scale** to (1, 1, 1) (although you probably want to test out a large scale since you're here)
-- If not already done, set each texture, and, for cyclostationarity, the realization of the sampler, and each spatially-varying mean.
+Each shader was written by first generating the code of a StandardMaterial3D. As such, some parameters are not always correct by default. For instance, if you do not use a roughness map, set roughness to 0. This is not an ORM material: texture components should be separated in individual files.
 
-3. Optionnal: Camera
-
-We borrowed a [simple script for the camera](https://godotengine.org/asset-library/asset/1561), you can attach that to a Camera3D to move in your scene when you execute it.
+The textures should be set on the bottom. For non-stationary texture synthesis, do not forget to add the pre-computed means and sampler realization.
 
 NOTE: Only seamless textures are compatible.
+
+### World environment
+
+The scene does not contain a world environment. If you want to view the scene correctly when executing the program, you should add your own. When we work we usually don't move past the editor.
+
+### Camera
+
+We borrowed a [simple script for the camera](https://godotengine.org/asset-library/asset/1561), you can attach that to a Camera3D to move in your scene when you execute it.
+It is supposed to mimic the behaviour of the camera in the editor.
+
 
 ## Cyclostationarity: choosing period vectors.
 

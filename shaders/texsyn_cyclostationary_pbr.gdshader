@@ -2,38 +2,38 @@
 
 shader_type spatial;
 render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
-uniform vec4 albedo : source_color;
+uniform vec4 albedo : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform sampler2D texture_albedo : source_color,filter_linear_mipmap_anisotropic,repeat_enable;
 uniform float point_size : hint_range(0,128);
-uniform float roughness : hint_range(0,1);
+uniform float roughness : hint_range(0,1) = float(1.0);
 uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap_anisotropic,repeat_enable;
-uniform vec4 metallic_texture_channel;
+uniform vec4 metallic_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap_anisotropic,repeat_enable;
-uniform float specular;
-uniform float metallic;
+uniform float specular = 0.5;
+uniform float metallic = 1.0;
 uniform sampler2D texture_normal : hint_roughness_normal,filter_linear_mipmap_anisotropic,repeat_enable;
 uniform float normal_scale : hint_range(-16,16);
 uniform sampler2D texture_ambient_occlusion : hint_default_white, filter_linear_mipmap_anisotropic,repeat_enable;
-uniform vec4 ao_texture_channel;
+uniform vec4 ao_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 uniform float ao_light_affect;
 uniform sampler2D texture_heightmap : hint_default_black,filter_linear_mipmap_anisotropic,repeat_enable;
-uniform float heightmap_scale;
-uniform int heightmap_min_layers;
-uniform int heightmap_max_layers;
-uniform vec2 heightmap_flip;
-uniform vec3 uv1_scale;
+uniform float heightmap_scale = 1.0;
+uniform int heightmap_min_layers = 8;
+uniform int heightmap_max_layers = 32;
+uniform vec2 heightmap_flip = vec2(1.0, 1.0);
+uniform vec3 uv1_scale = vec3(1.0, 1.0, 0.0);
 uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
+uniform vec3 uv2_scale = vec3(1.0, 1.0, 0.0);
 uniform vec3 uv2_offset;
 
 //Specific to this shader
-uniform sampler2D samplerRealization : filter_nearest;
-uniform sampler2D mean_albedo : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D samplerRealization : hint_default_black, filter_nearest;
+uniform sampler2D mean_albedo : hint_default_black, source_color, filter_linear_mipmap_anisotropic, repeat_enable;
 uniform sampler2D mean_normal : hint_roughness_normal,filter_linear_mipmap_anisotropic,repeat_enable;
 uniform sampler2D mean_roughness : hint_roughness_r,filter_linear_mipmap_anisotropic,repeat_enable;
-uniform sampler2D mean_metallic : hint_default_white, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D mean_metallic : hint_default_black, filter_linear_mipmap_anisotropic, repeat_enable;
 uniform sampler2D mean_heightmap : hint_default_black, filter_linear_mipmap_anisotropic, repeat_enable;
-uniform sampler2D mean_ambient_occlusion : hint_default_white, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D mean_ambient_occlusion : hint_default_black, filter_linear_mipmap_anisotropic, repeat_enable;
 
 void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;

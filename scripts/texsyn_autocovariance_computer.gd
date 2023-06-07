@@ -20,13 +20,11 @@ extends Node3D
 var proctex = ProceduralSampling.new()
 
 func checkMeanExistence(tex : Texture):
-	var rid = tex.get_rid().get_id()
 	var meanTexFilename = "res://{dir}/mean_acv_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 	return FileAccess.file_exists(meanTexFilename)
 
 func saveMean(tex: Texture, mean: Image):
 	if tex != null:
-		var rid = tex.get_rid().get_id()
 		var meanTexFilename = "res://{dir}/mean_acv_{id}.png".format({"dir":texsynDirectoryName, "id":tex.get_path().get_basename().get_file()})
 		mean.save_png(meanTexFilename)
 		
@@ -93,48 +91,47 @@ func _ready():
 	var computeMetallic = meanNeedsComputation(texture_metallic)
 	var computeAO = meanNeedsComputation(texture_ao)
 	
-	var meanLoaded = true
 	if computeAlbedo:
 		exemplarAlbedo = Image.new()
 		width = texture_albedo.get_image().get_width()
 		height = texture_albedo.get_image().get_height()
 		initImageFromParameters(exemplarAlbedo, texture_albedo, Image.FORMAT_RGBF)
-		proctex.set_albedo(exemplarAlbedo)
+		proctex.set_component(ProceduralSampling.ALBEDO, exemplarAlbedo)
 
 	if computeNormal:
 		exemplarNormal = Image.new()
 		width = texture_normal.get_image().get_width()
 		height = texture_normal.get_image().get_height()
 		initImageFromParameters(exemplarNormal, texture_normal, Image.FORMAT_RGBF)
-		proctex.set_normal(exemplarNormal)
+		proctex.set_component(ProceduralSampling.NORMAL, exemplarNormal)
 	
 	if computeHeight:
 		exemplarHeight = Image.new()
 		width = texture_height.get_image().get_width()
 		height = texture_height.get_image().get_height()
 		initImageFromParameters(exemplarHeight, texture_height, Image.FORMAT_RF)
-		proctex.set_height(exemplarHeight)
+		proctex.set_component(ProceduralSampling.HEIGHT, exemplarHeight)
 	
 	if computeRoughness:
 		exemplarRoughness = Image.new()
 		width = texture_roughness.get_image().get_width()
 		height = texture_roughness.get_image().get_height()
 		initImageFromParameters(exemplarRoughness, texture_roughness, Image.FORMAT_RF)
-		proctex.set_roughness(exemplarRoughness)
+		proctex.set_component(ProceduralSampling.ROUGHNESS, exemplarRoughness)
 	
 	if computeMetallic:
 		exemplarMetallic = Image.new()
 		width = texture_metallic.get_image().get_width()
 		height = texture_metallic.get_image().get_height()
 		initImageFromParameters(exemplarMetallic, texture_metallic, Image.FORMAT_RF)
-		proctex.set_metallic(exemplarMetallic)
+		proctex.set_component(ProceduralSampling.METALLIC, exemplarMetallic)
 
 	if computeAO:
 		exemplarAO = Image.new()
 		width = texture_ao.get_image().get_width()
 		height = texture_ao.get_image().get_height()
 		initImageFromParameters(exemplarAO, texture_ao, Image.FORMAT_RF)
-		proctex.set_ao(exemplarAlbedo)
+		proctex.set_component(ProceduralSampling.AMBIENT_OCCLUSION, exemplarAO)
 		
 	if computeAlbedo or computeNormal or computeHeight or computeRoughness or computeMetallic or computeAO:
 		proctex.computeAutocovarianceSampler()
@@ -150,33 +147,32 @@ func _ready():
 				srPdfName = srPdfName.format({"dir":texsynDirectoryName, "id":instanceName})
 				pdf.save_png(srPdfName)
 			realization.save_exr(srName)
-	
 	if computeAlbedo :
 		meanAlbedo = Image.create(width, height, false, Image.FORMAT_RGBF)
-		proctex.spatiallyVaryingMeanToAO(meanAlbedo)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.ALBEDO, meanAlbedo)
 		saveDataFromParameters(meanAlbedo, exemplarAlbedo, texture_albedo)
 		
 	if computeNormal :
 		meanNormal = Image.create(width, height, false, Image.FORMAT_RGBF)
-		proctex.spatiallyVaryingMeanToAO(meanNormal)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.NORMAL, meanNormal)
 		saveDataFromParameters(meanNormal, exemplarNormal, texture_normal)
 		
 	if computeHeight :
 		meanHeight = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToAO(meanHeight)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.HEIGHT, meanHeight)
 		saveDataFromParameters(meanHeight, exemplarHeight, texture_height)
 		
 	if computeRoughness :
 		meanRoughness = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToAO(meanRoughness)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.ROUGHNESS, meanRoughness)
 		saveDataFromParameters(meanRoughness, exemplarRoughness, texture_roughness)
 		
 	if computeMetallic :
 		meanMetallic = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToAO(meanMetallic)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.METALLIC, meanMetallic)
 		saveDataFromParameters(meanMetallic, exemplarMetallic, texture_metallic)
 
 	if computeAO :
 		meanAO = Image.create(width, height, false, Image.FORMAT_RF)
-		proctex.spatiallyVaryingMeanToAO(meanAO)
+		proctex.spatiallyVaryingMeanToComponent(ProceduralSampling.AMBIENT_OCCLUSION, meanAO)
 		saveDataFromParameters(meanAO, exemplarAO, texture_ao)
