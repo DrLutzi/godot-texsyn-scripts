@@ -7,7 +7,9 @@
 | *A periodic tiling-free texture synthesized in real time using cyclostationary texture synthesis* |
 
 This project is a script repository to test our texture synthesis scripts and image processing classes using [our fork of Godot 4.0](https://github.com/DrLutzi/godot), in the [texsyn4 branch](https://github.com/DrLutzi/godot/tree/texsyn4).
+
 It is used by researchers at the BISOUS of the University of Sherbrooke to work on real-time texture synthesis.
+
 It contains direct implementations of **cyclostationary tiling and blending** [[LSD21]](LSD21), **autocovariance-preserving tiling and blending** [[LSD23]](LSD23) and all tiling and blending algorithms are designed using a **square/square dual tiling structure** [[LSD23]](LSD23).
 
 ## Installation
