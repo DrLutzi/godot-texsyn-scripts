@@ -37,7 +37,7 @@ ehthumbs.db
 Thumbs.db
 
 # Godot #
+.godot
 *.import
 *.png
-*.godot
 *.exr
