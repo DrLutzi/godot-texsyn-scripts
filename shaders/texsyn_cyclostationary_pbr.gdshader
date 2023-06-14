@@ -12,7 +12,7 @@ uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap_anis
 uniform float specular = 0.5;
 uniform float metallic = 1.0;
 uniform sampler2D texture_normal : hint_roughness_normal,filter_linear_mipmap_anisotropic,repeat_enable;
-uniform float normal_scale : hint_range(-16,16);
+uniform float normal_scale : hint_range(-16,16) = float(1.0);
 uniform sampler2D texture_ambient_occlusion : hint_default_white, filter_linear_mipmap_anisotropic,repeat_enable;
 uniform vec4 ao_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 uniform float ao_light_affect;

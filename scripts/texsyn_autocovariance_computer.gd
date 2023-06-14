@@ -48,6 +48,7 @@ func saveExemplar(tex: Texture, mean: Image):
 
 func initImageFromParameters(image, texture, format):
 	image.copy_from(texture.get_image())
+	image.decompress()
 	image.convert(format)
 	image.resize(pdfSize, pdfSize)
 	
